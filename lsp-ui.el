@@ -40,12 +40,7 @@
   :link '(custom-manual "(lsp-ui) Top")
   :link '(info-link "(lsp-ui) Customizing"))
 
-(require 'cl-lib)
 (require 'dash)
-
-(with-eval-after-load 'winum
-  (when (and (boundp 'winum-ignored-buffers-regexp) lsp-ui-doc-winum-ignore)
-    (add-to-list 'winum-ignored-buffers-regexp lsp-ui-doc--buffer-prefix)))
 
 (defun lsp-ui-peek--render (major string)
   (with-temp-buffer
@@ -161,13 +156,16 @@ Both should have the form (FILENAME LINE COLUMN)."
 
 (provide 'lsp-ui)
 
-(cl-eval-when (load eval)
-  (require 'lsp-ui-sideline)
-  (require 'lsp-ui-peek)
-  (require 'lsp-ui-imenu)
-  (require 'lsp-ui-doc)
+(require 'lsp-ui-sideline)
+(require 'lsp-ui-peek)
+(require 'lsp-ui-imenu)
+(require 'lsp-ui-doc)
 
-  (with-eval-after-load 'flycheck
-    (require 'lsp-ui-flycheck)))
+(with-eval-after-load 'flycheck
+  (require 'lsp-ui-flycheck))
+
+(with-eval-after-load 'winum
+  (when (and (boundp 'winum-ignored-buffers-regexp) lsp-ui-doc-winum-ignore)
+    (add-to-list 'winum-ignored-buffers-regexp lsp-ui-doc--buffer-prefix)))
 
 ;;; lsp-ui.el ends here
